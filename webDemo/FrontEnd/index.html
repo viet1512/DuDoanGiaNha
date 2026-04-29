@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ước tính giá nhà (hỗ trợ tham khảo)</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Ước tính giá nhà</h2>
+        <form id="predictionForm">
+            <label for="chieuDai">Chiều Dài (m):</label>
+            <input type="number" id="chieuDai" name="chieuDai" step="0.1" required>
+
+            <label for="chieuNgang">Chiều Ngang (m):</label>
+            <input type="number" id="chieuNgang" name="chieuNgang" step="0.1" required>
+
+            <label for="dienTich">Diện Tích (m²):</label>
+            <input type="number" id="dienTich" name="dienTich" step="0.1" required>
+
+            <label for="Phongngu">Số Phòng Ngủ:</label>
+            <input type="number" id="Phongngu" name="Phongngu" required>
+
+            <label for="SoTang">Số Tầng:</label>
+            <input type="number" id="SoTang" name="SoTang" step="0.1" required>
+
+            <label for="PhongTam">Số Phòng Tắm:</label>
+            <input type="number" id="PhongTam" name="PhongTam" required>
+
+            <label for="Loai">Loại Nhà:</label>
+            <select id="Loai" name="Loai">
+                <option value="" disabled selected>-- Chọn loại nhà --</option>
+                <option value="nhà ngõ, hẻm">Nhà ngõ, hẻm</option>
+                <option value="nhà mặt phố, mặt tiền">Nhà mặt phố, mặt tiền</option>
+                <option value="nhà phố liền kề">Nhà phố liền kề</option>
+                <option value="nhà biệt thự">Nhà biệt thự</option>
+            </select>
+
+            <label for="GiayTo">Giấy Tờ:</label>
+            <select id="GiayTo" name="GiayTo">
+                <option value="" disabled selected>-- Chọn giấy tờ --</option>
+                <option value="đã có sổ">Đã có sổ</option>
+                <option value="đang chờ sổ">Đang chờ sổ</option>
+                <option value="unknown">Unknown</option>
+                <option value="không có sổ">Không có sổ</option>
+                <option value="giấy tờ viết tay">Giấy tờ viết tay</option>
+                <option value="sổ chung / công chứng vi bằng">Sổ chung / công chứng vi bằng</option>
+            </select>
+
+            <label for="TinhTrangNoiThat">Tình Trạng Nội Thất:</label>
+            <select id="TinhTrangNoiThat" name="TinhTrangNoiThat">
+                <option value="" disabled selected>-- Chọn Tình trạng nội thât --</option>
+                <option value="nội thất đầy đủ">Nội thất đầy đủ</option>
+                <option value="unknown">Unknown</option>
+                <option value="nội thất cao cấp">Nội thất cao cấp</option>
+                <option value="hoàn thiện cơ bản">Hoàn thiện cơ bản</option>
+                <option value="bàn giao thô">Bàn giao thô</option>
+            </select>
+
+            <label for="Phuong">Phường:</label>
+            <select id="Phuong" name="Phuong">
+              <option value="" disabled selected>-- Chọn Phường --</option>
+              <option value="phường long biên">Phường Long Biên</option>
+              <option value="phường bồ đề">Phường Bồ Đề</option>
+              <option value="phường thạch bàn">Phường Thạch Bàn</option>
+              <option value="phường việt hưng">Phường Việt Hưng</option>
+              <option value="phường sài đồng">Phường Sài Đồng</option>
+              <option value="phường ngọc thụy">Phường Ngọc Thụy</option>
+              <option value="phường phúc lợi">Phường Phúc Lợi</option>
+              <option value="phường phúc đồng">Phường Phúc Đồng</option>
+              <option value="phường ngọc lâm">Phường Ngọc Lâm</option>
+              <option value="phường cự khối">Phường Cự Khối</option>
+            </select>
+
+            <button type="button" onclick="makePrediction()">Xem mức giá gợi ý</button>
+        </form>
+        <div id="result"></div>
+
+        <div class="panel">
+            <h3>Các yếu tố đã được hệ thống xem xét</h3>
+            <ul id="rulesList"></ul>
+        </div>
+
+        <div class="panel">
+            <h3>Cảnh báo quan trọng (nếu có)</h3>
+            <ul id="warningsList"></ul>
+        </div>
+
+        <div class="panel">
+            <h3>Gợi ý tiếp theo cho bạn</h3>
+            <ul id="recommendationsList"></ul>
+        </div>
+    </div>
+    <script src="js.js"></script>
+</body>
+</html>

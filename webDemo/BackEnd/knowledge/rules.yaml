@@ -1,0 +1,220 @@
+﻿rules:
+
+# =========================
+# NHÓM LUẬT PHÁP LÝ
+# =========================
+
+  - id: LEGAL_CLEAR
+    description: Giấy tờ pháp lý rõ ràng giúp tăng mức định giá.
+    priority: 1
+    weight: 4.0
+    confidence: 0.9
+    source: Chuyên gia môi giới
+    enabled: true
+    if:
+      - field: GiayTo
+        op: eq
+        value: đã có sổ
+    then:
+      price_adjustment_percent: 4.0
+      risk_level: low
+
+  - id: LEGAL_HANDWRITTEN
+    description: Giấy tờ viết tay làm tăng rủi ro và giảm giá trị.
+    priority: 1
+    weight: -10.0
+    confidence: 0.95
+    source: Kinh nghiệm thực tế giao dịch
+    enabled: true
+    if:
+      - field: GiayTo
+        op: eq
+        value: giấy tờ viết tay
+    then:
+      price_adjustment_percent: -10.0
+      risk_level: high
+      warning: "Cảnh báo: giấy tờ viết tay có rủi ro pháp lý cao."
+
+  - id: LEGAL_NO_BOOK
+    description: Không có sổ làm giảm mạnh mức định giá.
+    priority: 1
+    weight: -12.0
+    confidence: 0.98
+    source: Chuyên gia thẩm định
+    enabled: true
+    if:
+      - field: GiayTo
+        op: eq
+        value: không có sổ
+    then:
+      price_adjustment_percent: -12.0
+      risk_level: high
+      warning: "Cảnh báo: tài sản không có sổ."
+
+
+# =========================
+# NHÓM LUẬT VỊ TRÍ
+# =========================
+
+  - id: LOCATION_MAIN_STREET
+    description: Nhà mặt phố/mặt tiền có lợi thế thương mại.
+    priority: 2
+    weight: 10.0
+    confidence: 0.88
+    source: Dữ liệu thị trường BĐS
+    enabled: true
+    if:
+      - field: Loai
+        op: eq
+        value: nhà mặt phố, mặt tiền
+    then:
+      price_adjustment_percent: 10.0
+      liquidity_level: high
+
+  - id: LOCATION_ALLEY
+    description: Nhà ngõ/hẻm thường thanh khoản thấp hơn nhà mặt tiền.
+    priority: 2
+    weight: -8.0
+    confidence: 0.8
+    source: Dữ liệu lịch sử giao dịch
+    enabled: true
+    if:
+      - field: Loai
+        op: eq
+        value: nhà ngõ, hẻm
+    then:
+      price_adjustment_percent: -8.0
+      liquidity_level: low
+
+  - id: WARD_LONG_BIEN
+    description: Khu vực Long Biên có mức quan tâm ổn định.
+    priority: 3
+    weight: 2.3
+    confidence: 0.75
+    source: Tổng hợp tin đăng khu vực
+    enabled: true
+    if:
+      - field: Phuong
+        op: eq
+        value: phường long biên
+    then:
+      price_adjustment_percent: 2.3
+
+# =========================
+# NHÓM LUẬT CHẤT LƯỢNG TÀI SẢN
+# =========================
+
+  - id: INTERIOR_PREMIUM
+    description: Nội thất cao cấp giúp tăng giá chào bán.
+    priority: 3
+    weight: 4.0
+    confidence: 0.85
+    source: Chuyên gia môi giới
+    enabled: true
+    if:
+      - field: TinhTrangNoiThat
+        op: eq
+        value: nội thất cao cấp
+    then:
+      price_adjustment_percent: 4.0
+
+  - id: INTERIOR_RAW
+    description: Nhà bàn giao thô cần chi phí hoàn thiện.
+    priority: 3
+    weight: -4.0
+    confidence: 0.82
+    source: Kinh nghiệm định giá sơ cấp
+    enabled: true
+    if:
+      - field: TinhTrangNoiThat
+        op: eq
+        value: bàn giao thô
+    then:
+      price_adjustment_percent: -4.0
+
+  - id: AREA_LARGE
+    description: Diện tích lớn thường có giá trị tuyệt đối cao hơn.
+    priority: 4
+    weight: 5.0
+    confidence: 0.7
+    source: Thống kê dữ liệu huấn luyện
+    enabled: true
+    if:
+      - field: dienTich
+        op: gte
+        value: 80
+    then:
+      price_adjustment_percent: 5.0
+
+  - id: AREA_SMALL
+    description: Diện tích nhỏ hơn 40m2 thường có tính thanh khoản thấp hơn.
+    priority: 4
+    weight: -1.5
+    confidence: 0.7
+    source: Thống kê dữ liệu huấn luyện
+    enabled: true
+    if:
+      - field: dienTich
+        op: lt
+        value: 40
+    then:
+      price_adjustment_percent: -1.5
+
+  - id: HIGH_FLOORS
+    description: Nhà nhiều tầng có thể phù hợp nhu cầu ở kết hợp kinh doanh.
+    priority: 4
+    weight: 2.0
+    confidence: 0.65
+    source: Chuyên gia khu vực
+    enabled: true
+    if:
+      - field: SoTang
+        op: gte
+        value: 3
+    then:
+      price_adjustment_percent: 2.0
+
+  - id: BATHROOM_MANY
+    description: Nhà có từ 3 phòng tắm trở lên thường phù hợp hộ gia đình lớn.
+    priority: 4
+    weight: 1.5
+    confidence: 0.68
+    source: Tổng hợp tin đăng khu vực Long Biên
+    enabled: true
+    if:
+      - field: PhongTam
+        op: gte
+        value: 3
+    then:
+      price_adjustment_percent: 1.5
+
+  - id: BEDROOM_MANY
+    description: Nhà có từ 4 phòng ngủ trở lên thường có giá trị sử dụng cao hơn.
+    priority: 4
+    weight: 1.2
+    confidence: 0.66
+    source: Tổng hợp tin đăng khu vực Long Biên
+    enabled: true
+    if:
+      - field: Phongngu
+        op: gte
+        value: 4
+    then:
+      price_adjustment_percent: 1.2
+
+  - id: SMALL_AREA_TOO_MANY_BEDROOMS
+    description: Diện tích nhỏ nhưng số phòng ngủ quá nhiều thường làm giảm công năng thực tế.
+    priority: 4
+    weight: -1.8
+    confidence: 0.7
+    source: Kinh nghiệm bố trí công năng nhà ở
+    enabled: true
+    if:
+      - field: dienTich
+        op: lt
+        value: 45
+      - field: Phongngu
+        op: gte
+        value: 4
+    then:
+      price_adjustment_percent: -1.8
