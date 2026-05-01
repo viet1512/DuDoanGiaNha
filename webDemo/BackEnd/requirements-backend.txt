@@ -1,6 +1,6 @@
 Flask==3.0.3
 Flask-Cors==5.0.0
-joblib==1.4.2
-pandas==2.2.2
-scikit-learn==1.5.2
+joblib==1.5.3
+pandas==3.0.2
+scikit-learn==1.8.0
 PyYAML==6.0.2
