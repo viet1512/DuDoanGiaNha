@@ -43,7 +43,7 @@ def normalize_facts(data: Dict[str, Any]) -> Dict[str, Any]:
 
     for key in TEXT_FIELDS:
         if key in normalized and isinstance(normalized[key], str):
-            normalized[key] = normalized[key].strip().lower()
+            normalized[key] = normalized[key].strip()
     return normalized
 
 

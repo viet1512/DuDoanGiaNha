@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Dict
 
+import numpy as np
 import pandas as pd
 from joblib import load
 
@@ -35,5 +36,6 @@ class PredictorService:
     def predict_price(self, facts: Dict[str, Any]) -> float:
         row = {feature: facts.get(feature) for feature in self.FEATURE_ORDER}
         features = pd.DataFrame([row])
-        prediction = self.model.predict(features)[0]
-        return float(prediction)
+        prediction_log = self.model.predict(features)[0]
+        prediction_vnd = np.expm1(prediction_log)
+        return float(prediction_vnd)

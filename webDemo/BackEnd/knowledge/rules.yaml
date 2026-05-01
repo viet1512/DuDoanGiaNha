@@ -14,13 +14,13 @@
     if:
       - field: GiayTo
         op: eq
-        value: đã có sổ
+        value: Đã có sổ
     then:
       price_adjustment_percent: 4.0
       risk_level: low
 
   - id: LEGAL_HANDWRITTEN
-    description: Giấy tờ viết tay làm tăng rủi ro và giảm giá trị.
+    description: Trạng thái giấy tờ không rõ ràng làm tăng rủi ro và giảm giá trị.
     priority: 1
     weight: -10.0
     confidence: 0.95
@@ -29,27 +29,11 @@
     if:
       - field: GiayTo
         op: eq
-        value: giấy tờ viết tay
+        value: Khong ro
     then:
-      price_adjustment_percent: -10.0
-      risk_level: high
-      warning: "Cảnh báo: giấy tờ viết tay có rủi ro pháp lý cao."
-
-  - id: LEGAL_NO_BOOK
-    description: Không có sổ làm giảm mạnh mức định giá.
-    priority: 1
-    weight: -12.0
-    confidence: 0.98
-    source: Chuyên gia thẩm định
-    enabled: true
-    if:
-      - field: GiayTo
-        op: eq
-        value: không có sổ
-    then:
-      price_adjustment_percent: -12.0
-      risk_level: high
-      warning: "Cảnh báo: tài sản không có sổ."
+      price_adjustment_percent: -6.0
+      risk_level: medium
+      warning: "Cảnh báo: tình trạng giấy tờ chưa rõ, cần kiểm tra pháp lý kỹ."
 
 
 # =========================
@@ -66,7 +50,7 @@
     if:
       - field: Loai
         op: eq
-        value: nhà mặt phố, mặt tiền
+        value: Nhà mặt phố, mặt tiền
     then:
       price_adjustment_percent: 10.0
       liquidity_level: high
@@ -81,7 +65,7 @@
     if:
       - field: Loai
         op: eq
-        value: nhà ngõ, hẻm
+        value: Nhà ngõ, hẻm
     then:
       price_adjustment_percent: -8.0
       liquidity_level: low
@@ -96,7 +80,7 @@
     if:
       - field: Phuong
         op: eq
-        value: phường long biên
+        value: Phường Long Biên
     then:
       price_adjustment_percent: 2.3
 
@@ -114,7 +98,7 @@
     if:
       - field: TinhTrangNoiThat
         op: eq
-        value: nội thất cao cấp
+        value: Nội thất cao cấp
     then:
       price_adjustment_percent: 4.0
 
@@ -128,7 +112,7 @@
     if:
       - field: TinhTrangNoiThat
         op: eq
-        value: bàn giao thô
+        value: Bàn giao thô
     then:
       price_adjustment_percent: -4.0
 
